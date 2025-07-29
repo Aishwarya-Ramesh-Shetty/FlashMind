@@ -9,7 +9,7 @@ import flashcardRoutes from './routes/flashcard.js'
 
 const app = express()
 app.use(cors())
-app.use(express.json())
+app.use(express.json({ limit: "1mb" }))
 
 
 app.get('/', (req, res) => {
@@ -36,3 +36,10 @@ mongoose
     .catch((err) => console.error('Mongodb error',err))
 
 
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
